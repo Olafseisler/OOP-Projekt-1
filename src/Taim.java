@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Taim {
 	// Taime info
@@ -27,12 +28,47 @@ public class Taim {
 	}
 
 		
-	public void kasva() {
-		// TODO: rekursiivne meetod laiendab taime võra.
-		// Suvaliste arvude generaator määrab millal tekib varre otsa 
-		// vili ja millal leht. Praegu lisab saagile
+	public String kasva() {
+		String[] valikudparem = {vars, ""};
+		String[] valikudvasak = {vars, ""};
+
+		java.util.Random random = new Random();
+		int i = 0;
+		while(i<1) {
+			int valikparem = random.nextInt(valikudparem.length);
+			int valikvasak = random.nextInt(valikudvasak.length);
+			String[] viimanekasv = kujutus.split("\n");
+			String kasv;
+			if (viimanekasv[0].equals("|/")) {
+				kasv = valikudvasak[valikvasak] + "|" + vili;
+				if (valikudvasak[valikvasak].equals("")) {
+					kasv = " " + "|" + vili;
+				}
+			}
+			else if ((viimanekasv[0].equals("\\|"))) {
+				kasv = vili + "|" + valikudparem[valikparem];
+			}
+			else if ((viimanekasv[0].equals("\\|/"))) {
+				kasv = vili + "|" + vili;
+			}
+			else if ((viimanekasv[0].equals(" |"))) {
+				kasv = valikudvasak[valikvasak] + "|" + valikudparem[valikparem];
+				if (valikudvasak[valikvasak].equals("")) {
+					kasv = " " + "|" + valikudparem[valikparem];
+				}
+			}
+			else{
+				kasv = valikudvasak[valikvasak] + "|" + valikudparem[valikparem];
+				if (valikudvasak[valikvasak].equals("")) {
+					kasv = " " + "|" + valikudparem[valikparem];
+				}
+			}
+			kujutus = kasv + "\n" + kujutus;
+			i++;
+		}
+		return kujutus;
 		
-		saak += Math.random() * saagiRikkus;
+		//saak += Math.random() * saagiRikkus;
 	}
 	
 	/**
