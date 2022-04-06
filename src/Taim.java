@@ -4,13 +4,13 @@ public class Taim {
 	// Taime info
 	private String nimetus;
 	private double saagiRikkus;
+	private int maxKõrgus;
 	private double saak; // saak kilodes
 	
 	// Taime esitus sõnena
-	private String vars;
 	private String leht;
 	private String vili;
-	private String kujutus = "|";
+	private String kujutus = " |";
 	
 	/**
 	 * Taime isendi konstruktor, annab vajaliku info taime esitamiseks ekraanil
@@ -18,23 +18,25 @@ public class Taim {
 	 * @param leht sümbol
 	 * @param vili sümbol
 	 */
-	public Taim(String nimetus, double saagiRikkus, String vars, String leht, String vili) {
+	public Taim(String nimetus, double saagiRikkus, int maxKõrgus, String leht, String vili) {
 		this.nimetus = nimetus;
 		this.saagiRikkus = saagiRikkus;
-		this.vars = vars;
+		this.maxKõrgus = maxKõrgus;
 		this.leht = leht;
 		this.vili = vili;
 		saak = 0;
 	}
 
 		
-	public String kasva() {
-		String[] valikudparem = {vars, ""};
-		String[] valikudvasak = {vars, ""};
+	public void kasva() {
+		saak += Math.random() * saagiRikkus;
+		
+		String[] valikudparem = {"/", leht};
+		String[] valikudvasak = {"\\", leht};
 
-		java.util.Random random = new Random();
+		Random random = new Random();
 		int i = 0;
-		while(i<1) {
+		while(i<1 && kujutus.split("\n").length < maxKõrgus) {
 			int valikparem = random.nextInt(valikudparem.length);
 			int valikvasak = random.nextInt(valikudvasak.length);
 			String[] viimanekasv = kujutus.split("\n");
@@ -66,24 +68,29 @@ public class Taim {
 			kujutus = kasv + "\n" + kujutus;
 			i++;
 		}
-		return kujutus;
-		
-		//saak += Math.random() * saagiRikkus;
 	}
+
 	
 	/**
 	 * Tagastab sõnetüüpi esituse 
 	 * @return
 	 */
 	public String esita() {
-		return kujutus + "_";
+		return kujutus;
 	}
 	
-	
+	/**
+	 * Tagastab nimetuse
+	 * @return
+	 */
 	public String getNimetus() {
 		return nimetus;
 	}
 	
+	/**
+	 * Tagastab hetkese saagi
+	 * @return
+	 */
 	public double getSaak() {
 		return saak;
 	}
@@ -93,7 +100,7 @@ public class Taim {
 	 */
 	@Override
 	public String toString() {
-		return "Taim [nimetus=" + nimetus + ", vars=" + vars + ", leht=" + leht + ", vili=" + vili + ", saak=" + saak + "]";
+		return "Taim [nimetus=" + nimetus + ", leht=" + leht + ", vili=" + vili + ", saak=" + saak + "]";
 	}
 	
 	

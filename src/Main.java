@@ -54,17 +54,10 @@ public class Main {
 			""";
 	//------------------------------------------------------------
 	
-	static String peenar = """
-			
-			______%s____%s____%s____%s____%s______
-			||__________________________________||						
-			||__________________________________||							
-			||__________________________________||
-			||__________________________________||
-			
-			""";
-	static String tegevusedEsita = "[KÜLVA] 	[KASTA]		[VÄETA]		[ROHI]		[LÕIKA]";
-	static String kogusedEsita = "TOMAT: %d kg	REDIS: %d kg	PORGAND: %d kg";
+	
+	static String tegevusRiba = "[KÜLVA] 	[KASTA]		[VÄETA]		[ROHI]		[LÕIKA]";
+	static String taimed = "TAIMEDE NUMBRID ISTUTAMISEKS: TOMAT : 1	PAPRIKA : 2	HERNES : 3";
+	static String kogusedEsita = "TOMAT: %f kg	PAPRIKA: %f kg	HERNES: %f kg";
 	
 	private static HashMap<String, Double> kogused = new HashMap<String, Double>(); // Sõnastik taime nimede ja kogustega
 	private static String[] tegevused = new String[] {"külva", "kasta", "väeta", "rohi", "lõika"};
@@ -72,16 +65,23 @@ public class Main {
 	/**
 	 * Kontrollib kasutajalt saadud sisendit ning sooritab antud sõnale sarnaseima tegevuse
 	 */
-	public static void sisendiKontroll() {
+	public static void sisendiKontroll(Peenar peenar) {
 		// Loo scanner
 		Scanner sc = new Scanner(System.in);
 		boolean protsess = true;
 		String sarnaseimTegevus = "";
+		int taim = 0;
 		
 		// Küsi kuni saad sobiva vastuse
 		while (protsess) {
-			String[] vastus = sc.next().toLowerCase().split(" ");
-			
+			String[] vastus = sc.nextLine().toLowerCase().split(" ");
+			if (vastus.length >= 2) {
+				try {
+					taim = Integer.valueOf(vastus[1]);
+				} catch (Exception e){
+					taim = 0;
+				}
+			}
 			tagasi: // Label kust loopidest välja saab
 			for (String s : tegevused) {
 				int sarnasusi = 0;
@@ -107,6 +107,31 @@ public class Main {
 		}
 		
 		System.out.println("Sooritan tegevuse : " + sarnaseimTegevus);
+		switch(sarnaseimTegevus) {
+		case "külva" :
+			if (taim == 1)
+				peenar.istuta(new Taim("Tomat", 0.5, 7, "^", "O"));
+			else if (taim == 2)
+				peenar.istuta(new Taim("Paprika", 0.8, 5, "{}", "B"));
+			else if (taim == 3)
+				peenar.istuta(new Taim("Hernes", 0.7, 10, "P", "["));
+			else
+				System.out.println("[[[ Palun ütle tühikuga eraldatud taime number mida külvata! ]]]");
+			break;
+		
+		case "kasta" : 
+			peenar.kasta();
+			break;
+		case "väeta" :
+			peenar.väeta();
+			break;
+		case "rohi"  :
+			peenar.rohi();
+			break;
+		case "lõika" : 
+			peenar.lõika();
+			break;
+		}
 		
 	}
 	
@@ -125,23 +150,29 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Peenar p = new Peenar((int) (Math.random() * 100), (int) (Math.random() * 100));
-		System.out.println(p.toString());
-		p.kasta();
-		System.out.println(p.toString());
-		p.väeta();
-		System.out.println(p.toString());
+		p.esita();
 		
-		Taim tomat = new Taim("Tomat", 0.5, "|", "<>", "O");
+		// Küsi mängijalt sisendit ja simuleeri taime kasvu
+		while (true) {
+			System.out.println(tegevusRiba);
+			System.out.println(taimed);
+			System.out.printf(kogusedEsita, kogused.get("Tomat"), kogused.get("Paprika"), kogused.get("Hernes"));
+			System.out.println();
+			System.out.print("Kirjuta soovitud tegevus: ");
+			sisendiKontroll(p);
+			
+			System.out.println();
+
+			p.esita();
+			p.kasvata();
+			System.out.println(p.toString());
+			System.out.println();
+			p.kuiva();
+			if (p.onTaim())
+				p.tarbiToitaineid();
+			//System.out.println();
+		}
 		
-		p.istuta(tomat, 0);
-		p.kasvata();
-		sisendiKontroll();
-		System.out.println(p.toString());
-		
-		// Graafiline osa
-		
-		//System.out.printf(String.format(kogused, 1, 1, 1));
-		//System.out.printf(String.format(peenar, ""));
 	}
 
 }
