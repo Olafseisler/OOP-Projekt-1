@@ -29,9 +29,13 @@ public class Taim {
 		saak = 0;
 	}
 
-		
+	/**
+	 * Simuleeri taime kasvamist
+	 * @param umbrohi : umbrohi tase
+	 * @param toitained : toitainete tase
+	 */
 	public void kasva(int umbrohi, int toitained) {
-		saak += Math.random() * saagiRikkus;
+		saak = Math.max(0, Math.min(saagiRikkus * 8, saak + 2 * Math.random() * saagiRikkus * (1-umbrohi*0.01)));
 		
 		String[] valikudparem = {"/", leht};
 		String[] valikudvasak = {"\\", leht};
@@ -42,7 +46,7 @@ public class Taim {
 			lisakasv = 1;
 		}
 		int i = 0;
-		while(i<(1+lisakasv) && kujutus.split("\n").length < 6-umbrohi) {
+		while(i<(1+lisakasv) && kujutus.split("\n").length < maxKõrgus-(int)(umbrohi * 0.2)) {
 			int valikparem = random.nextInt(valikudparem.length);
 			int valikvasak = random.nextInt(valikudvasak.length);
 			String[] viimanekasv = kujutus.split("\n");

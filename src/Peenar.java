@@ -52,11 +52,16 @@ public class Peenar {
 		toitained = Math.min(toitained + 10, 100);
 	}
 	
-
+	/*
+	 * Eemalda umbrohtu
+	 */
 	public void rohi() {
-		umbrohi -= Math.random() * 10;
+		umbrohi = Math.max(0, umbrohi - 10);
 	}
-
+	
+	/**
+	 * Korja saak taimelt ning eemalda see potist
+	 */
 	public void lõika() {
 		Main.lisaSaak(taim.getNimetus(), taim.getSaak());
 		taim = null;
@@ -90,10 +95,23 @@ public class Peenar {
 		toitained = Math.max(0, toitained - (int)(10 * Math.random()));
 	}
 	
+	/**
+	 * Kasvata umbrohtu peenrale
+	 */
+	public void kasvataUmbrohtu() {
+		umbrohi = Math.min(umbrohi + (int)(5 * Math.random()), 100);
+	}
+	
+	/**
+	 * @return jah kui potis on taim
+	 */
 	public boolean onTaim() {
 		return taim != null;
 	}
 	
+	/**
+	 * Esita peenar sõnena konsooli
+	 */
 	public void esita() {
 		if (taim != null) {
 			String[] osad = taim.esita().split("\n");
@@ -112,6 +130,6 @@ public class Peenar {
 	
 	@Override
 	public String toString() {
-		return "Peenar [toitained=" + toitained + ", niiskus=" + niiskus + ", taim=" + taim + "]";
+		return "Peenar [toitained=" + toitained + ", niiskus=" + niiskus + ", taim=" + taim + ", umbrohi = " + umbrohi + "]";
 	}
 }

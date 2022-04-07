@@ -168,8 +168,10 @@ public class Main {
 			System.out.println(p.toString());
 			System.out.println();
 			p.kuiva();
-			if (p.onTaim())
+			if (p.onTaim()) {
 				p.tarbiToitaineid();
+				p.kasvataUmbrohtu();
+			}
 			//System.out.println();
 		}
 		
