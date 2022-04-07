@@ -21,7 +21,7 @@ public class Peenar {
 	 * @param toitained protsent mullas
 	 * @param niiskus protsent mullas
 	 */
-	public Peenar(int toitained, int niiskus) {
+	public Peenar(int toitained, int niiskus, int umbrohi) {
 		this.toitained = toitained;
 		this.niiskus = niiskus;
 	}
@@ -72,7 +72,7 @@ public class Peenar {
 			// niiske või üleväetatud
 			boolean kasKasvab = 2 * Math.random() * (niiskus/100.0) * (toitained/100.0) > 0.3;
 			if (kasKasvab)
-				taim.kasva();
+				taim.kasva(umbrohi, toitained);
 		}
 	}
 	
