@@ -1,5 +1,7 @@
 import java.util.Random;
 
+import static java.lang.Math.round;
+
 public class Taim {
 	// Taime info
 	private String nimetus;
@@ -28,13 +30,17 @@ public class Taim {
 	}
 
 		
-	public String kasva() {
+	public String kasva(int umbrohi, int toitained) {
 		String[] valikudparem = {vars, ""};
 		String[] valikudvasak = {vars, ""};
 
 		java.util.Random random = new Random();
+		int lisakasv = 0;
+		if(toitained == 100){
+			lisakasv = 1;
+		}
 		int i = 0;
-		while(i<1) {
+		while(i<(1+lisakasv) && kujutus.split("\n").length < 6-umbrohi) {
 			int valikparem = random.nextInt(valikudparem.length);
 			int valikvasak = random.nextInt(valikudvasak.length);
 			String[] viimanekasv = kujutus.split("\n");

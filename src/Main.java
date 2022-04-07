@@ -124,7 +124,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Peenar p = new Peenar((int) (Math.random() * 100), (int) (Math.random() * 100));
+		Peenar p = new Peenar((int) (Math.random() * 100), (int) (Math.random() * 100),0);
 		System.out.println(p.toString());
 		p.kasta();
 		System.out.println(p.toString());
